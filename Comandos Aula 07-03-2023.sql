@@ -66,9 +66,16 @@ data de abertura da mesma(no formato brasileiro dia/mês/ano)*/
 SELECT CL.nome AS "Nome",
 	   CP.tipo AS "Tipo da Conta",
 	   CP.saldo AS "Saldo",
-	   date_format(COV.dataAbertura, "%d/%M/%Y") AS "Data de Abetura"
+	   date_format(COV.dataAbertura, "%d/%m/%Y") AS "Data de Abetura"
 	   FROM cliente AS CL
 	   INNER JOIN conta AS CP
 	   INNER JOIN contavinculada AS COV
 	   ON COV.CLIENTE_idCLIENTE = CL.idCliente
 	   AND COV.CONTA_idCONTA = CP.idCONTA;
+
+#Inserir um telefone para um determinado cliente
+UPDATE cliente SET telefone = "(35)3295-9700" WHERE idCliente = 1;
+SELECT * FROM cliente;
+
+#Inserir subconsulta para mostrar contas vinculadas de cliente co telefone 
+SELECT * FROM contavinculada AS cv WHERE cv.CLIENTE_idCLIENTE IN (SELECT cli.idCLIENTE FROM cliente AS cli WHERE cli.telefone IS NOT NULL);
