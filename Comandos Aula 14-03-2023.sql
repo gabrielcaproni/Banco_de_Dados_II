@@ -72,6 +72,8 @@ SELECT CL.nome AS "Nome",
 	   INNER JOIN contavinculada AS COV
 	   ON COV.CLIENTE_idCLIENTE = CL.idCliente
 	   AND COV.CONTA_idCONTA = CP.idCONTA;
+	   
+	   #     *** PARTE DE SUBCONSULTA *** 
 
 #Inserir um telefone para um determinado cliente
 UPDATE cliente SET telefone = "(35)3295-9700" WHERE idCliente = 1;
@@ -79,3 +81,18 @@ SELECT * FROM cliente;
 
 #Inserir subconsulta para mostrar contas vinculadas de cliente co telefone 
 SELECT * FROM contavinculada AS cv WHERE cv.CLIENTE_idCLIENTE IN (SELECT cli.idCLIENTE FROM cliente AS cli WHERE cli.telefone IS NOT NULL);
+
+#Mostrar as contas desde que os saldos sejam iguais ou maiores que a média dos saldos 
+SELECT * FROM conta;
+SELECT SUM(saldo) FROM conta;
+SELECT FORMAT(SUM(saldo),2) FROM conta;
+SELECT COUNT(*) FROM conta;
+SELECT FORMAT(SUM(saldo) / COUNT(*), 2) FROM conta;
+SELECT AVG(saldo) FROM conta;
+
+SELECT * FROM conta WHERE saldo >= (SELECT AVG(saldo) FROM conta);
+
+#Mostrar as contas vinculadas aos clientes com idade superior a 45 anos
+SELECT * FROM cliente;
+SELECT * FROM contavinculada HAVING CLIENTE_idCliente IN 
+(SELECT idCliente FROM cliente WHERE FLOOR(DATEDIFF(CURDATE(), dataNascimento) / 365) > 45);
