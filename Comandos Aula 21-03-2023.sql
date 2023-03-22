@@ -110,3 +110,26 @@ SELECT tipo, SUM(saldo) AS somaSaldo
 FROM conta GROUP BY tipo 
 HAVING somaSaldo > 
 (SELECT AVG(saldo) FROM conta);
+
+#Subconsultas 
+#Aumentar em 5 reais o saldo dos clientes de MG
+SHOW TABLES;
+
+SELECT * FROM cliente;
+UPDATE cliente SET rg = "MG 999.999-99" WHERE idCliente = 1;
+SELECT * FROM contavinculada;
+
+#codificaçaõ da Subconsulta
+UPDATE conta SET saldo = saldo + 5 
+WHERE idConta IN (SELECT CONTA_idConta 
+FROM contavinculada WHERE CLIENTE_idCliente 
+IN (SELECT idCliente FROM cliente WHERE RG LIKE "MG%")); 
+
+#Excluir as contas viculadas aos cliente sem RG
+
+#Entendimento do Situação-Problema 
+SELECT * FROM contavinculada;
+SELECT * FROM cliente;
+
+#Subconsulta
+DELETE FROM contavinculada WHERE CLIENTE_idCliente IN (SELECT idCliente FROM cliente WHERE rg IS NULL);
