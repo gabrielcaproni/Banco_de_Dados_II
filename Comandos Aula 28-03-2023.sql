@@ -133,3 +133,37 @@ SELECT * FROM cliente;
 
 #Subconsulta
 DELETE FROM contavinculada WHERE CLIENTE_idCliente IN (SELECT idCliente FROM cliente WHERE rg IS NULL);
+
+
+# Aula 28/03/2023
+
+SELECT * FROM cliente;
+DESC cliente;
+
+INSERT INTO cliente(idCliente, nome, cpf, datanascimento)
+VALUES(NULL, "Fabiana Silva", "999.999.999-99", "1970-12-02"); 
+
+INSERT INTO cliente(idCliente, nome, cpf, datanascimento)
+VALUES(NULL, "Guilherme Souza", "265.012.025-98", "1980-12-10"); 
+
+INSERT INTO cliente(idCliente, nome, cpf, datanascimento)
+VALUES(NULL, "Ryan Mendes", "125.145.897-98", "2000-09-02"); 
+
+INSERT INTO cliente(idCliente, nome, cpf, datanascimento)
+VALUES(NULL, "Luiz Henrique", "451.897.475-98", "1960-05-02"); 
+
+INSERT INTO cliente(idCliente, nome, cpf, datanascimento)
+VALUES(NULL, "Gabriel Pegoraro", "123.034.496-89", "1984-02-10"); 
+
+INSERT INTO cliente(idCliente, nome, cpf, datanascimento)
+VALUES(NULL, "Athos Telini", "987.154.789-36", "2003-11-01"); 
+
+# Ciação de uma tabela virtual - VIEW para ordenar os clientes em ordem alfabética crescente
+
+CREATE VIEW v_ClientesOrdemCrescente AS (SELECT nome, cpf FROM cliente ORDER BY nome);
+
+SHOW TABLES;
+
+# Listagem dos dados de uma view
+
+SELECT * FROM v_clientesordemcrescente;
