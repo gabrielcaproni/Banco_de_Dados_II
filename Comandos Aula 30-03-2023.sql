@@ -2,7 +2,7 @@
 SHOW DATABASES;
 
 #Indicar qual BD será usado
-USE agencia3si2023;
+USE agencia3si;
 
 #Mostrar as tabelas(entidades) do BD em uso
 SHOW TABLES;
@@ -167,3 +167,25 @@ SHOW TABLES;
 # Listagem dos dados de uma view
 
 SELECT * FROM v_clientesordemcrescente;
+
+# Comando para mostrar o total fenanceiro da Agência
+
+SELECT SUM(saldo) FROM conta;
+
+# Comando para criar a view chamada v_TotalFinanceiro
+
+CREATE VIEW v_TotalFinanceiro AS
+(SELECT SUM(saldo) FROM conta);
+
+# Comando para visualizar o conteudo do VIEW
+
+SELECT * FROM v_totalfinanceiro;
+
+# Comando para mostrar o nome do cliente, o tipo de sua(as) conta(s) e respectivo(s) saldo(s)
+
+SELECT cli.nome, con.tipo, con.saldo FROM cliente AS cli
+INNER JOIN conta AS con
+INNER JOIN contavinculada AS cv
+ON cli.idCLIENTE = cv.CLIENTE_idCLIENTE
+AND con.idCONTA = cv.CONTA_idCONTA;
+
