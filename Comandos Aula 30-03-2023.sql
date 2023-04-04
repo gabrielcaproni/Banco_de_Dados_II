@@ -189,3 +189,11 @@ INNER JOIN contavinculada AS cv
 ON cli.idCLIENTE = cv.CLIENTE_idCLIENTE
 AND con.idCONTA = cv.CONTA_idCONTA;
 
+# Mostrar id, nome e telefone dos clientes que possuem essa informação (telefone)
+
+SELECT idCliente, nome, telefone FROM cliente 
+WHERE telefone IS NOT NULL;
+
+CREATE VIEW agenda1 AS (SELECT idCliente, nome, telefone FROM cliente WHERE telefone IS NOT NULL);
+
+RENAME TABLE agenda1 TO v_agenda1;
