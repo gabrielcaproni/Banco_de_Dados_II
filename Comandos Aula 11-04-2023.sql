@@ -73,7 +73,7 @@ SELECT CL.nome AS "Nome",
 	   ON COV.CLIENTE_idCLIENTE = CL.idCliente
 	   AND COV.CONTA_idCONTA = CP.idCONTA;
 	   
-	   #     *** PARTE DE SUBCONSULTA *** 
+#                       PARTE DE SUBCONSULTA                   #
 
 #Inserir um telefone para um determinado cliente
 UPDATE cliente SET telefone = "(35)3295-9700" WHERE idCliente = 1;
@@ -158,6 +158,12 @@ VALUES(NULL, "Gabriel Pegoraro", "123.034.496-89", "1984-02-10");
 INSERT INTO cliente(idCliente, nome, cpf, datanascimento)
 VALUES(NULL, "Athos Telini", "987.154.789-36", "2003-11-01"); 
 
+
+
+#                        VIEW                 #
+
+
+
 # Ciação de uma tabela virtual - VIEW para ordenar os clientes em ordem alfabética crescente
 
 CREATE VIEW v_ClientesOrdemCrescente AS (SELECT nome, cpf FROM cliente ORDER BY nome);
@@ -197,3 +203,52 @@ WHERE telefone IS NOT NULL;
 CREATE VIEW agenda1 AS (SELECT idCliente, nome, telefone FROM cliente WHERE telefone IS NOT NULL);
 
 RENAME TABLE agenda1 TO v_agenda1;
+
+
+
+#                              TRANSAÇÕES                     #
+
+
+
+#Transação para atualização do saldo das contas do tipo Poupança em 10%
+
+SELECT * FROM conta; 
+BEGIN;
+	UPDATE conta SET saldo = saldo * 1.10 WHERE tipo = "Poupança";
+COMMIT;
+
+SELECT * FROM conta; 
+
+#Transação para confirmar a inserção de 3 clientes
+
+SELECT * FROM cliente;
+BEGIN;
+	INSERT INTO cliente VALUES(NULL, "Fernando Telles", "444", "444", "1975-05-12", "(35) 9 9999-8888"); 
+	INSERT INTO cliente VALUES(NULL, "Alisson Fernandes", "444", "444", "1980-07-20", "(35) 9 1111-4444"); 
+	INSERT INTO cliente VALUES(NULL, "Marcela Augusta", "444", "444", "1990-10-02", "(35) 9 2222-3333");
+COMMIT; 
+
+SELECT * FROM cliente;
+
+#Transação que apague determinado vinculo de conta e a respectiva conta
+
+SELECT * FROM conta;
+SELECT * FROM contavinculada;
+
+BEGIN;
+	DELETE FROM contavinculada WHERE CONTA_idCONTA = 3;
+	DELETE FROM conta WHERE idCONTA = 3;
+COMMIT;
+
+SELECT * FROM contavinculada; 
+SELECT * FROM conta;
+
+#Transação para colocar os nomes dos clientes em letras MAIÚSCULAS desde que possuam telefone cadastrado 
+
+SELECT * FROM cliente;
+
+BEGIN;
+	UPDATE cliente SET nome = UPPER(nome) WHERE telefone IS NOT NULL;
+COMMIT;
+
+SELECT * FROM cliente;
