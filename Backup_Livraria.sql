@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   PRIMARY KEY (`codCategoria`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.categoria: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.categoria: ~1 rows (aproximadamente)
 INSERT INTO `categoria` (`codCategoria`, `nome`) VALUES
 	(1, 'Suspense');
 
@@ -50,11 +50,9 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 
 -- Copiando dados para a tabela livraria2si.cliente: ~5 rows (aproximadamente)
 INSERT INTO `cliente` (`codCliente`, `nome`, `dataNascimento`, `cpf`, `uf`, `endereco`, `bairro`, `cidade`, `cep`, `email`) VALUES
-	(2, 'Ryan Mendes ', '2004-03-28', '258.698.569-87', 'MG', 'Rua da Fé ', 'Santo Amaro ', 'Machado ', '37550-000', 'RyanMendes@gmail.com'),
-	(3, 'Gabriel Pegoraro', '29/11/2003', '123.034.496-93', 'MG', 'Rua das Posses', 'Peróbas', 'Carvalhópolis', '37760-000', 'Gabrielcaproni09@gmail.com'),
-	(4, 'Ryan Mendes ', '2004-03-28', '123.369.589-65', 'MG', 'Rua da Fé ', 'Santo Amaro ', 'Machado ', '37550-000', 'RyanMendes@gmail.com'),
-	(5, 'Osvaldo Pereira', '25/08/1985', '123.639.587-58', 'SP', 'Rua da Fé', 'Bairro das Flores', 'São Paulo', '123.639.587-58', 'Osvaldo321@gmail.com'),
-	(6, '', '', '', '', '', '', '', '', '');
+	(2, 'RYAN MENDES ', '2004-03-28', '258.698.569-87', 'MG', 'Rua da Fé ', 'Santo Amaro ', 'Machado ', '37550-000', 'RyanMendes@gmail.com'),
+	(3, 'GABRIEL PEGORARO', '2003-11-29', '123.034.496-93', 'MG', 'Rua das Posses', 'Peróbas', 'Carvalhópolis', '37760-000', 'Gabrielcaproni09@gmail.com'),
+	(6, 'GUILHERME HENRIQUE', '1994-03-09', '125.589.265-22', 'RJ', 'Rua das Dores', 'Bairro dos Biba', 'Guarujá', '78900-002', '');
 
 -- Copiando estrutura para tabela livraria2si.editora
 DROP TABLE IF EXISTS `editora`;
@@ -62,14 +60,17 @@ CREATE TABLE IF NOT EXISTS `editora` (
   `codEditora` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(200) NOT NULL,
   PRIMARY KEY (`codEditora`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- Copiando dados para a tabela livraria2si.editora: ~4 rows (aproximadamente)
 INSERT INTO `editora` (`codEditora`, `nome`) VALUES
 	(2, 'Loyola'),
 	(4, 'Rocco'),
 	(5, 'Aleph'),
-	(6, 'Suma');
+	(6, 'Suma'),
+	(10, 'Panini'),
+	(11, 'Saraiva'),
+	(12, 'Jesus Cop');
 
 -- Copiando estrutura para tabela livraria2si.itemvenda
 DROP TABLE IF EXISTS `itemvenda`;
@@ -108,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `produto` (
   CONSTRAINT `fk_PRODUTO_VENDA1` FOREIGN KEY (`VENDA_codVenda`, `VENDA_CLIENTE_codCliente`) REFERENCES `venda` (`codVenda`, `CLIENTE_codCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.produto: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.produto: ~1 rows (aproximadamente)
 INSERT INTO `produto` (`codProduto`, `nome`, `precoVenda`, `precoCusto`, `quantidadeEstoque`, `dataLancamento`, `EDITORA_codEditora`, `VENDA_codVenda`, `VENDA_CLIENTE_codCliente`, `CATEGORIA_codCategoria`) VALUES
 	(1, 'Crônicas de Tandandan', 50, 30, 100, '1989-03-25', 2, 1, 2, 1);
 
@@ -121,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`idusuarios`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.usuarios: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.usuarios: ~1 rows (aproximadamente)
 INSERT INTO `usuarios` (`idusuarios`, `nome`, `senha`) VALUES
 	(4, 'adm', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3');
 
@@ -142,6 +143,29 @@ CREATE TABLE IF NOT EXISTS `venda` (
 INSERT INTO `venda` (`codVenda`, `dataHora`, `desconto`, `tipoVenda`, `CLIENTE_codCliente`) VALUES
 	(1, '2022-08-28', 0.50, 'À vista', 2),
 	(2, '2021-02-23', 0.50, 'Cartão Crédito', 3);
+
+-- Copiando estrutura para view livraria2si.v_datanascimento
+DROP VIEW IF EXISTS `v_datanascimento`;
+-- Criando tabela temporária para evitar erros de dependência de VIEW
+CREATE TABLE `v_datanascimento` (
+	`nome` VARCHAR(200) NOT NULL COLLATE 'utf8_general_ci',
+	`Data de Nascimento` VARCHAR(10) NULL COLLATE 'utf8mb4_general_ci'
+) ENGINE=MyISAM;
+
+-- Copiando estrutura para view livraria2si.v_editoras
+DROP VIEW IF EXISTS `v_editoras`;
+-- Criando tabela temporária para evitar erros de dependência de VIEW
+CREATE TABLE `v_editoras` (
+	`codEditora` INT(11) NOT NULL
+) ENGINE=MyISAM;
+
+-- Copiando estrutura para view livraria2si.v_ufcliente
+DROP VIEW IF EXISTS `v_ufcliente`;
+-- Criando tabela temporária para evitar erros de dependência de VIEW
+CREATE TABLE `v_ufcliente` (
+	`codCliente` INT(11) NOT NULL,
+	`nome` VARCHAR(200) NOT NULL COLLATE 'utf8_general_ci'
+) ENGINE=MyISAM;
 
 -- Copiando estrutura para procedure livraria2si.altera_Cliente
 DROP PROCEDURE IF EXISTS `altera_Cliente`;
@@ -394,6 +418,25 @@ BEGIN
     );
 END//
 DELIMITER ;
+
+-- Copiando estrutura para view livraria2si.v_datanascimento
+DROP VIEW IF EXISTS `v_datanascimento`;
+-- Removendo tabela temporária e criando a estrutura VIEW final
+DROP TABLE IF EXISTS `v_datanascimento`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_datanascimento` AS (SELECT nome, date_format(dataNascimento, "%d/%m/%Y") AS "Data de Nascimento" FROM cliente) ;
+
+-- Copiando estrutura para view livraria2si.v_editoras
+DROP VIEW IF EXISTS `v_editoras`;
+-- Removendo tabela temporária e criando a estrutura VIEW final
+DROP TABLE IF EXISTS `v_editoras`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_editoras` AS (
+SELECT codEditora from editora WHERE codEditora = 4) ;
+
+-- Copiando estrutura para view livraria2si.v_ufcliente
+DROP VIEW IF EXISTS `v_ufcliente`;
+-- Removendo tabela temporária e criando a estrutura VIEW final
+DROP TABLE IF EXISTS `v_ufcliente`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_ufcliente` AS (SELECT codCliente, nome FROM cliente WHERE uf LIKE "%MG%") ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
