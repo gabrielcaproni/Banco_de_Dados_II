@@ -24,9 +24,11 @@ SELECT nome, date_format(dataNascimento, "%d/%m/%Y") AS "Data de Nascimento" FRO
 
 CREATE VIEW v_DataNascimento AS(SELECT nome, date_format(dataNascimento, "%d/%m/%Y") AS "Data de Nascimento" FROM cliente);
 
+SELECT * FROM v_datanascimento; 
+
 SELECT codEditora, nome FROM editora;
 
 CREATE VIEW v_Editoras AS(
-SELECT codEditora from editora WHERE codEditora = 4);
+SELECT codEditora, nome from editora WHERE codEditora >= 4);
 
 SELECT * FROM v_Editoras;

@@ -248,7 +248,8 @@ SELECT * FROM conta;
 SELECT * FROM cliente;
 
 BEGIN;
-	UPDATE cliente SET nome = UPPER(nome) WHERE telefone IS NOT NULL;
+	UPDATE cliente SET nome = LOWER(nome) WHERE RG IS NULL;
 COMMIT;
 
 SELECT * FROM cliente;
+editora
