@@ -272,8 +272,29 @@ BEGIN
 END$
 delimiter;
 
+# Criar um trigger que registre no LOG de auditoria a alteração do CPF de um cliente da agência
 
+delimiter $ 
 
+CREATE TRIGGER tri_logFiscalizaCPF AFTER UPDATE ON cliente FOR EACH ROW 
+BEGIN 
+	SET @mensagem = CONCAT("CPF do cliente: ", NEW.nome, "foi alterado para ", NEW.cpf);
+	INSERT INTO auditoria VALUES(NULL, @mensagem, "cliente", NOW(), USER());
+END$
 
+delimiter;
 
+# Criar um trigger que registre no LOG de auditoria a inserção de uma conta com seus respectivos dados: idConta, tipo e  saldo  Sugestão para o nome = tri_LogInsereConta
+
+delimiter $
+CREATE TRIGGER tri_LogInsereConta
+AFTER INSERT 
+ON Conta
+FOR EACH ROW 
+BEGIN 
+	SET @mensagem = CONCAT("Código da conta: ", NEW.idConta, ", Tipo conta", NEW.tipo, ", Saldo inicial: R$ ", NEW.saldo);
+
+	INSERT INTO auditoria VALUES(NULL, @mensagem, "conta", NOW(), USER());
+END$
+delimiter;
 
