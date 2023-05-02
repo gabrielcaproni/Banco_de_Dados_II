@@ -20,6 +20,24 @@ DROP DATABASE IF EXISTS `livraria2si`;
 CREATE DATABASE IF NOT EXISTS `livraria2si` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `livraria2si`;
 
+-- Copiando estrutura para tabela livraria2si.auditoria
+DROP TABLE IF EXISTS `auditoria`;
+CREATE TABLE IF NOT EXISTS `auditoria` (
+  `codAuditoria` int(11) NOT NULL AUTO_INCREMENT,
+  `acao` varchar(400) DEFAULT NULL,
+  `tabela` varchar(50) DEFAULT NULL,
+  `dataHora` datetime DEFAULT NULL,
+  `usuario` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`codAuditoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Registra as princiais alterações neste BD.';
+
+-- Copiando dados para a tabela livraria2si.auditoria: ~4 rows (aproximadamente)
+INSERT INTO `auditoria` (`codAuditoria`, `acao`, `tabela`, `dataHora`, `usuario`) VALUES
+	(24, 'Código do cliente: 7, NomeLuiz Henrique, Data de Nascimento: 1980-02-01, CPF: ', 'Cliente', '2023-05-02 10:02:49', 'root@localhost'),
+	(25, 'Código do cliente: 8, NomeTeste, Data de Nascimento: 2000-02-25, CPF: 125.012.014-98', 'Cliente', '2023-05-02 10:05:01', 'root@localhost'),
+	(26, 'Exclusão de conta do cliente: Teste', 'Cliente', '2023-05-02 10:10:53', 'root@localhost'),
+	(27, 'Bairro do cliente: Luiz Henrique foi alterado para Santo Amaro', 'cliente', '2023-05-02 10:13:50', 'root@localhost');
+
 -- Copiando estrutura para tabela livraria2si.categoria
 DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE IF NOT EXISTS `categoria` (
@@ -28,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   PRIMARY KEY (`codCategoria`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.categoria: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.categoria: ~0 rows (aproximadamente)
 INSERT INTO `categoria` (`codCategoria`, `nome`) VALUES
 	(1, 'Suspense');
 
@@ -46,13 +64,14 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `cep` varchar(20) NOT NULL,
   `email` varchar(200) NOT NULL,
   PRIMARY KEY (`codCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- Copiando dados para a tabela livraria2si.cliente: ~5 rows (aproximadamente)
 INSERT INTO `cliente` (`codCliente`, `nome`, `dataNascimento`, `cpf`, `uf`, `endereco`, `bairro`, `cidade`, `cep`, `email`) VALUES
 	(2, 'RYAN MENDES ', '2004-03-28', '258.698.569-87', 'MG', 'Rua da Fé ', 'Santo Amaro ', 'Machado ', '37550-000', 'RyanMendes@gmail.com'),
 	(3, 'GABRIEL PEGORARO', '2003-11-29', '123.034.496-93', 'MG', 'Rua das Posses', 'Peróbas', 'Carvalhópolis', '37760-000', 'Gabrielcaproni09@gmail.com'),
-	(6, 'GUILHERME HENRIQUE', '1994-03-09', '125.589.265-22', 'RJ', 'Rua das Dores', 'Bairro dos Biba', 'Guarujá', '78900-002', '');
+	(6, 'GUILHERME HENRIQUE', '1994-03-09', '125.589.265-22', 'RJ', 'Rua das Dores', 'Bairro dos Biba', 'Guarujá', '78900-002', ''),
+	(7, 'Luiz Henrique', '1980-02-01', '521.145.789-96', 'MG', 'Rua dos Nobres', 'Santo Amaro', 'Machado', '37750-000', '');
 
 -- Copiando estrutura para tabela livraria2si.editora
 DROP TABLE IF EXISTS `editora`;
@@ -62,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `editora` (
   PRIMARY KEY (`codEditora`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.editora: ~4 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.editora: ~7 rows (aproximadamente)
 INSERT INTO `editora` (`codEditora`, `nome`) VALUES
 	(2, 'Loyola'),
 	(4, 'Rocco'),
@@ -109,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `produto` (
   CONSTRAINT `fk_PRODUTO_VENDA1` FOREIGN KEY (`VENDA_codVenda`, `VENDA_CLIENTE_codCliente`) REFERENCES `venda` (`codVenda`, `CLIENTE_codCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.produto: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.produto: ~0 rows (aproximadamente)
 INSERT INTO `produto` (`codProduto`, `nome`, `precoVenda`, `precoCusto`, `quantidadeEstoque`, `dataLancamento`, `EDITORA_codEditora`, `VENDA_codVenda`, `VENDA_CLIENTE_codCliente`, `CATEGORIA_codCategoria`) VALUES
 	(1, 'Crônicas de Tandandan', 50, 30, 100, '1989-03-25', 2, 1, 2, 1);
 
@@ -122,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`idusuarios`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.usuarios: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.usuarios: ~0 rows (aproximadamente)
 INSERT INTO `usuarios` (`idusuarios`, `nome`, `senha`) VALUES
 	(4, 'adm', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3');
 
@@ -156,7 +175,8 @@ CREATE TABLE `v_datanascimento` (
 DROP VIEW IF EXISTS `v_editoras`;
 -- Criando tabela temporária para evitar erros de dependência de VIEW
 CREATE TABLE `v_editoras` (
-	`codEditora` INT(11) NOT NULL
+	`codEditora` INT(11) NOT NULL,
+	`nome` VARCHAR(200) NOT NULL COLLATE 'utf8_general_ci'
 ) ENGINE=MyISAM;
 
 -- Copiando estrutura para view livraria2si.v_ufcliente
@@ -419,6 +439,42 @@ BEGIN
 END//
 DELIMITER ;
 
+-- Copiando estrutura para trigger livraria2si.tri_LogAlteraBairro
+DROP TRIGGER IF EXISTS `tri_LogAlteraBairro`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `tri_LogAlteraBairro` AFTER UPDATE ON `cliente` FOR EACH ROW BEGIN
+		SET @mensagem = CONCAT("Bairro do cliente: ", NEW.nome, " foi alterado para ", NEW.bairro);
+	INSERT INTO auditoria VALUES(NULL, @mensagem, "cliente", NOW(), USER());
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Copiando estrutura para trigger livraria2si.tri_LogApagaCliente
+DROP TRIGGER IF EXISTS `tri_LogApagaCliente`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `tri_LogApagaCliente` AFTER DELETE ON `cliente` FOR EACH ROW BEGIN
+	SELECT nome INTO @nomeCliente FROM cliente WHERE codCliente = OLD.codCliente;
+	SET @mensagem = CONCAT("Exclusão de conta do cliente: ", @nomeCliente);
+
+	INSERT INTO auditoria VALUES(NULL, @mensagem, "Cliente", NOW(), USER());
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Copiando estrutura para trigger livraria2si.tri_LogInsereCliente
+DROP TRIGGER IF EXISTS `tri_LogInsereCliente`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `tri_LogInsereCliente` AFTER INSERT ON `cliente` FOR EACH ROW BEGIN
+		SET @mensagem = CONCAT("Código do cliente: ", NEW.codCliente, ", Nome: ", NEW.nome, ", Data de Nascimento: ", NEW.dataNascimento, ", CPF: ", NEW.cpf);
+
+		INSERT INTO auditoria VALUES(NULL, @mensagem, "Cliente", NOW(), USER());
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
 -- Copiando estrutura para view livraria2si.v_datanascimento
 DROP VIEW IF EXISTS `v_datanascimento`;
 -- Removendo tabela temporária e criando a estrutura VIEW final
@@ -430,7 +486,7 @@ DROP VIEW IF EXISTS `v_editoras`;
 -- Removendo tabela temporária e criando a estrutura VIEW final
 DROP TABLE IF EXISTS `v_editoras`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_editoras` AS (
-SELECT codEditora from editora WHERE codEditora = 4) ;
+SELECT codEditora, nome from editora WHERE codEditora >= 4) ;
 
 -- Copiando estrutura para view livraria2si.v_ufcliente
 DROP VIEW IF EXISTS `v_ufcliente`;
