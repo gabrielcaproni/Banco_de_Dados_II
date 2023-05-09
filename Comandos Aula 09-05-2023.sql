@@ -297,4 +297,16 @@ BEGIN
 	INSERT INTO auditoria VALUES(NULL, @mensagem, "conta", NOW(), USER());
 END$
 delimiter;
+#                           Aula dia 09/05/2023
 
+# Calculo de idade dos clientes 
+select * FROM cliente;
+
+SELECT nome, dataNascimento,
+FLOOR(DATEDIFF(CURDATE(), dataNascimento)/365) AS Idade
+FROM cliente
+
+# Preparação para o trigger de registrar clientes menores 
+
+SELECT FLOOR(DATEDIFF(CURDATE(), dataNascimento)/365) AS @idade
+FROM cliente
