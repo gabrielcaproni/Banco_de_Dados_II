@@ -29,14 +29,22 @@ CREATE TABLE IF NOT EXISTS `auditoria` (
   `dataHora` datetime DEFAULT NULL,
   `usuario` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codAuditoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Registra as princiais alterações neste BD.';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Registra as princiais alterações neste BD.';
 
--- Copiando dados para a tabela livraria2si.auditoria: ~4 rows (aproximadamente)
+-- Copiando dados para a tabela livraria2si.auditoria: ~11 rows (aproximadamente)
 INSERT INTO `auditoria` (`codAuditoria`, `acao`, `tabela`, `dataHora`, `usuario`) VALUES
 	(24, 'Código do cliente: 7, NomeLuiz Henrique, Data de Nascimento: 1980-02-01, CPF: ', 'Cliente', '2023-05-02 10:02:49', 'root@localhost'),
 	(25, 'Código do cliente: 8, NomeTeste, Data de Nascimento: 2000-02-25, CPF: 125.012.014-98', 'Cliente', '2023-05-02 10:05:01', 'root@localhost'),
 	(26, 'Exclusão de conta do cliente: Teste', 'Cliente', '2023-05-02 10:10:53', 'root@localhost'),
-	(27, 'Bairro do cliente: Luiz Henrique foi alterado para Santo Amaro', 'cliente', '2023-05-02 10:13:50', 'root@localhost');
+	(27, 'Bairro do cliente: Luiz Henrique foi alterado para Santo Amaro', 'cliente', '2023-05-02 10:13:50', 'root@localhost'),
+	(28, 'Código do cliente: 9, Nome: Jubileu Batata , Data de Nascimento: 2000-02-05, CPF: 123', 'Cliente', '2023-05-09 10:23:07', 'root@localhost'),
+	(29, 'Inserção de cliente maior de idade: Jubileu Batata ', 'Cliente', '2023-05-09 10:23:07', 'root@localhost'),
+	(30, 'Código do cliente: 10, Nome: PEDRO, Data de Nascimento: 2001-12-30, CPF: ', 'Cliente', '2023-05-09 10:42:53', 'root@localhost'),
+	(31, 'Código do cliente: 11, Nome: GUSTAVO, Data de Nascimento: 2005-09-02, CPF: ', 'Cliente', '2023-05-09 10:43:24', 'root@localhost'),
+	(32, 'Código do cliente: 12, Nome: GUI, Data de Nascimento: 2007-05-25, CPF: ', 'Cliente', '2023-05-09 10:49:05', 'root@localhost'),
+	(33, 'Código do cliente: 13, Nome: VELHO, Data de Nascimento: 2000-02-12, CPF: ', 'Cliente', '2023-05-09 10:49:27', 'root@localhost'),
+	(34, 'Código do cliente: 14, Nome: Velho, Data de Nascimento: 2000-09-25, CPF: ', 'Cliente', '2023-05-09 10:51:57', 'root@localhost'),
+	(35, 'Código da editora: 13, nome da editora: teste', 'editora', '2023-05-10 08:06:49', 'root@localhost');
 
 -- Copiando estrutura para tabela livraria2si.categoria
 DROP TABLE IF EXISTS `categoria`;
@@ -63,15 +71,22 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `cidade` varchar(45) NOT NULL,
   `cep` varchar(20) NOT NULL,
   `email` varchar(200) NOT NULL,
+  `Coluna 11` int(11) DEFAULT NULL,
   PRIMARY KEY (`codCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela livraria2si.cliente: ~5 rows (aproximadamente)
-INSERT INTO `cliente` (`codCliente`, `nome`, `dataNascimento`, `cpf`, `uf`, `endereco`, `bairro`, `cidade`, `cep`, `email`) VALUES
-	(2, 'RYAN MENDES ', '2004-03-28', '258.698.569-87', 'MG', 'Rua da Fé ', 'Santo Amaro ', 'Machado ', '37550-000', 'RyanMendes@gmail.com'),
-	(3, 'GABRIEL PEGORARO', '2003-11-29', '123.034.496-93', 'MG', 'Rua das Posses', 'Peróbas', 'Carvalhópolis', '37760-000', 'Gabrielcaproni09@gmail.com'),
-	(6, 'GUILHERME HENRIQUE', '1994-03-09', '125.589.265-22', 'RJ', 'Rua das Dores', 'Bairro dos Biba', 'Guarujá', '78900-002', ''),
-	(7, 'Luiz Henrique', '1980-02-01', '521.145.789-96', 'MG', 'Rua dos Nobres', 'Santo Amaro', 'Machado', '37750-000', '');
+-- Copiando dados para a tabela livraria2si.cliente: ~9 rows (aproximadamente)
+INSERT INTO `cliente` (`codCliente`, `nome`, `dataNascimento`, `cpf`, `uf`, `endereco`, `bairro`, `cidade`, `cep`, `email`, `Coluna 11`) VALUES
+	(2, 'RYAN MENDES ', '2004-03-28', '258.698.569-87', 'MG', 'Rua da Fé ', 'Santo Amaro ', 'Machado ', '37550-000', 'RyanMendes@gmail.com', NULL),
+	(3, 'GABRIEL PEGORARO', '2003-11-29', '123.034.496-93', 'MG', 'Rua das Posses', 'Peróbas', 'Carvalhópolis', '37760-000', 'Gabrielcaproni09@gmail.com', NULL),
+	(6, 'GUILHERME HENRIQUE', '1994-03-09', '125.589.265-22', 'RJ', 'Rua das Dores', 'Bairro dos Biba', 'Guarujá', '78900-002', '', NULL),
+	(7, 'Luiz Henrique', '1980-02-01', '521.145.789-96', 'MG', 'Rua dos Nobres', 'Santo Amaro', 'Machado', '37750-000', '', NULL),
+	(9, 'Jubileu Batata ', '2000-02-05', '123', 'SP', 'Rua Tocantins', 'Achados e perdidos', 'São Paulo', '37780-000', 'teste@gmail.com', NULL),
+	(10, 'PEDRO', '2001-12-30', '', '', '', '', '', '', '', NULL),
+	(11, 'GUSTAVO', '2005-09-02', '', '', '', '', '', '', '', NULL),
+	(12, 'GUI', '2007-05-25', '', '', '', '', '', '', '', NULL),
+	(13, 'VELHO', '2000-02-12', '', '', '', '', '', '', '', NULL),
+	(14, 'Velho', '2000-09-25', '', '', '', '', '', '', '', NULL);
 
 -- Copiando estrutura para tabela livraria2si.editora
 DROP TABLE IF EXISTS `editora`;
@@ -79,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `editora` (
   `codEditora` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(200) NOT NULL,
   PRIMARY KEY (`codEditora`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- Copiando dados para a tabela livraria2si.editora: ~7 rows (aproximadamente)
 INSERT INTO `editora` (`codEditora`, `nome`) VALUES
@@ -89,7 +104,8 @@ INSERT INTO `editora` (`codEditora`, `nome`) VALUES
 	(6, 'Suma'),
 	(10, 'Panini'),
 	(11, 'Saraiva'),
-	(12, 'Jesus Cop');
+	(12, 'Jesus Cop'),
+	(13, 'teste');
 
 -- Copiando estrutura para tabela livraria2si.itemvenda
 DROP TABLE IF EXISTS `itemvenda`;
@@ -439,6 +455,21 @@ BEGIN
 END//
 DELIMITER ;
 
+-- Copiando estrutura para trigger livraria2si.tri_FormataNomeCliente
+DROP TRIGGER IF EXISTS `tri_FormataNomeCliente`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `tri_FormataNomeCliente` BEFORE INSERT ON `cliente` FOR EACH ROW BEGIN
+SELECT FLOOR(DATEDIFF(CURDATE(), dataNascimento)/365) INTO @idade
+		FROM cliente WHERE codCliente = NEW.codCliente;
+			if(@idade < 18)
+				then 
+					SET NEW.nome = UPPER(NEW.nome);
+			END if;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
 -- Copiando estrutura para trigger livraria2si.tri_LogAlteraBairro
 DROP TRIGGER IF EXISTS `tri_LogAlteraBairro`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
@@ -459,6 +490,27 @@ CREATE TRIGGER `tri_LogApagaCliente` AFTER DELETE ON `cliente` FOR EACH ROW BEGI
 	SET @mensagem = CONCAT("Exclusão de conta do cliente: ", @nomeCliente);
 
 	INSERT INTO auditoria VALUES(NULL, @mensagem, "Cliente", NOW(), USER());
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Copiando estrutura para trigger livraria2si.tri_logFiscalizaCPF
+DROP TRIGGER IF EXISTS `tri_logFiscalizaCPF`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `tri_logFiscalizaCPF` AFTER UPDATE ON `cliente` FOR EACH ROW BEGIN
+	SET @mensagem = CONCAT("CPF do cliente : ", NEW.nome, ", foi alterado para:  ", NEW.cpf);
+	INSERT INTO auditoria VALUES(NULL, @mensagem, "cliente", NOW(), USER());
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Copiando estrutura para trigger livraria2si.tri_logFormataNomeEditora
+DROP TRIGGER IF EXISTS `tri_logFormataNomeEditora`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `tri_logFormataNomeEditora` BEFORE INSERT ON `editora` FOR EACH ROW BEGIN
+	SET NEW.nome = UPPER(NEW.nome);
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
